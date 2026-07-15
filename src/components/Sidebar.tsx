@@ -17,8 +17,8 @@ export default function Sidebar({ activePage, onNavigate }: SidebarProps) {
   useEffect(() => {
     async function loadAlertStats() {
       try {
-        const alerts = await alertService.getAlerts();
-        setUnackCount(alerts.filter((a) => !a.acknowledged).length);
+        const alerts = [];  //temp change
+        //setUnackCount(alerts.filter((a) => !a.acknowledged).length);
       } catch (err) {
         console.error(err);
       }

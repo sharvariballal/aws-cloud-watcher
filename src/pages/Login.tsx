@@ -50,10 +50,10 @@ export default function Login({ onNavigate }: LoginProps) {
             <Cloud className="h-6.5 w-6.5" />
           </div>
           <h2 className="mt-4 text-2xl font-bold font-display tracking-tight text-white">
-            Access AWS Console Tower
+            Access your account
           </h2>
           <p className="mt-1.5 text-xs text-slate-400 font-mono">
-            Demo coordinates: use any valid email & 6-character password
+            use any valid email & 6-character password
           </p>
         </div>
 
@@ -69,7 +69,7 @@ export default function Login({ onNavigate }: LoginProps) {
             {/* Email input */}
             <div>
               <label className="text-xs font-semibold text-slate-400 block mb-1.5">
-                Developer Email
+                Email
               </label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500" />
@@ -87,7 +87,7 @@ export default function Login({ onNavigate }: LoginProps) {
             {/* Password input */}
             <div>
               <label className="text-xs font-semibold text-slate-400 block mb-1.5">
-                AWS Cognito Secret Token
+                Password
               </label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500" />
@@ -136,12 +136,6 @@ export default function Login({ onNavigate }: LoginProps) {
               Register here
             </button>
           </div>
-        </div>
-
-        {/* Integration tips */}
-        <div className="bg-slate-900/40 rounded-xl border border-slate-800/60 p-4 text-[10px] text-slate-500 font-mono leading-normal">
-          <span className="text-slate-400 font-bold block mb-1">AWS Integration Mapping:</span>
-          In production, this login form can be delegated entirely to AWS Cognito User Pools Hosted UI or connected via Amplify SDK for single-sign on (SSO).
         </div>
       </div>
     </div>

@@ -150,7 +150,7 @@ export default function Landing({ onNavigate }: LandingProps) {
             }}
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-orange-600 hover:bg-orange-700 px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-orange-600/20 hover:shadow-orange-600/35 hover:-translate-y-0.5 transition duration-200"
           >
-            <span>Register</span>
+            <span>Sign In</span>
             <ArrowRight className="h-4 w-4" />
           </button>
 

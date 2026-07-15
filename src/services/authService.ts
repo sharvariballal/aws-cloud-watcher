@@ -1,132 +1,166 @@
-/**
- * AWS Cloud Watcher - Authentication Service
- * 
- * To integrate with AWS Cognito User Pools:
- * 1. Install AWS Amplify Auth or Cognito SDK:
- *    npm install aws-amplify
- * 2. Configure Cognito:
- *    import { Amplify } from 'aws-amplify';
- *    Amplify.configure({
- *      Auth: {
- *        Cognito: {
- *          userPoolId: 'us-east-1_xxxxxxxxx',
- *          userPoolClientId: 'xxxxxxxxxxxxxxxxxxxxxxxxxx',
- *        }
- *      }
- *    });
- * 3. Replace the login / register calls with Amplify Auth:
- *    import { signIn, signUp, signOut, getCurrentUser } from 'aws-amplify/auth';
- */
-
-import { delay } from './api';
+import api from "./api";
 
 export interface User {
-  id: string;
-  email: string;
-  name: string;
-  company?: string;
-  role?: string;
+
+id:string;
+
+email:string;
+
+name:string;
+
+phoneNumber?:string;
+
+budget?:number;
+
+awsRegion?:string;
+
 }
 
 export const authService = {
-  // Simulate logging in
-  login: async (email: string, password: string): Promise<User> => {
-    await delay(600); // simulate API call
-    
-    // AWS Cognito implementation reference:
-    // try {
-    //   const { isSignedIn, nextStep } = await signIn({ username: email, password });
-    //   const userAttributes = await fetchUserAttributes();
-    //   return { id: userAttributes.sub, email, name: userAttributes.name };
-    // } catch (error) {
-    //   throw new Error(error.message);
-    // }
 
-    // Mock validation
-    if (password.length < 6) {
-      throw new Error('Password must be at least 6 characters long');
-    }
 
-    const mockUser: User = {
-      id: 'usr-92813',
-      email: email,
-      name: email.split('@')[0].toUpperCase(),
-      company: 'CloudOps Solutions Ltd.',
-      role: 'DevOps & FinOps Administrator',
-    };
+login: async(
+email:string,
+password:string
+):Promise<User>=>{
 
-    localStorage.setItem('aws_watcher_user', JSON.stringify(mockUser));
-    return mockUser;
-  },
 
-  // Simulate register
-  register: async (email: string, password: string, name: string): Promise<User> => {
-    await delay(800);
+try{
 
-    // AWS Cognito implementation reference:
-    // try {
-    //   const { isSignUpComplete, userId } = await signUp({
-    //     username: email,
-    //     password,
-    //     options: {
-    //       userAttributes: { email, name }
-    //     }
-    //   });
-    //   return { id: userId, email, name };
-    // } catch (error) {
-    //   throw new Error(error.message);
-    // }
 
-    if (!email.includes('@')) {
-      throw new Error('Invalid email address');
-    }
-    if (password.length < 6) {
-      throw new Error('Password must be at least 6 characters long');
-    }
+const response =
+await api.post(
+"/auth/login",
+{
+email,
+password
+}
+);
 
-    const mockUser: User = {
-      id: 'usr-' + Math.floor(Math.random() * 100000),
-      email: email,
-      name: name || email.split('@')[0],
-      company: 'Personal Account',
-      role: 'Administrator',
-    };
+const user =
+response.data.user;
 
-    localStorage.setItem('aws_watcher_user', JSON.stringify(mockUser));
-    return mockUser;
-  },
+localStorage.setItem(
+"aws_watcher_user",
+JSON.stringify(user)
+);
 
-  // Get current user session from local cache
-  getCurrentUser: async (): Promise<User | null> => {
-    await delay(100);
-    
-    // AWS Cognito implementation reference:
-    // try {
-    //   const user = await getCurrentUser();
-    //   const attributes = await fetchUserAttributes();
-    //   return { id: user.userId, email: attributes.email, name: attributes.name };
-    // } catch {
-    //   return null;
-    // }
+localStorage.setItem(
+"token",
+response.data.token
+);
 
-    const cachedUser = localStorage.getItem('aws_watcher_user');
-    if (cachedUser) {
-      try {
-        return JSON.parse(cachedUser);
-      } catch {
-        return null;
-      }
-    }
-    return null;
-  },
+return user;
 
-  // Logout
-  logout: async (): Promise<void> => {
-    await delay(300);
-    
-    // AWS Cognito implementation reference:
-    // await signOut();
+}catch(error:any){
 
-    localStorage.removeItem('aws_watcher_user');
-  }
+
+throw new Error(
+
+error.response?.data?.message
+||
+"Login failed"
+
+);
+
+}
+
+},
+
+
+register: async(
+
+email:string,
+password:string,
+name:string
+
+):Promise<User>=>{
+
+
+try{
+
+const response =
+await api.post(
+"/auth/register",
+
+{
+email,
+password,
+name
+}
+
+);
+
+const user =
+{
+
+id:
+response.data.cognito.UserSub,
+
+email,
+
+name
+
+};
+
+localStorage.setItem(
+
+"aws_watcher_user",
+
+JSON.stringify(user)
+
+);
+
+return user;
+
+}catch(error:any){
+
+
+throw new Error(
+
+error.response?.data?.message
+||
+"Registration failed"
+
+);
+
+}
+
+
+},
+
+getCurrentUser:
+async():Promise<User|null>=>{
+
+
+const user =
+localStorage.getItem(
+"aws_watcher_user"
+);
+
+if(user){
+
+return JSON.parse(user);
+
+}
+
+
+return null;
+
+},
+
+logout:
+async()=>{
+
+
+localStorage.removeItem(
+"token"
+);
+
+
+localStorage.removeItem(
+"aws_watcher_user"
+);
+
+}
 };

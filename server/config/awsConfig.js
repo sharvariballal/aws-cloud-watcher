@@ -1,30 +1,3 @@
-/**
- * AWS configuration file (awsConfig.js)
- * ============================================================================
- * 
- * WHY THIS FILE EXISTS:
- * This file acts as a centralized manager for all AWS Credentials and Region details.
- * Instead of reading `process.env.AWS_ACCESS_KEY_ID`, etc., across multiple separate service files,
- * we read them once here, perform validation, and export a clean configuration object.
- * This guarantees consistency and keeps all credentials safe and in one place.
- * 
- * WHERE AWS CREDENTIALS ARE READ:
- * The credentials are automatically read from the .env file using process.env:
- * - AWS_ACCESS_KEY_ID: The unique public key identifier for your IAM User.
- * - AWS_SECRET_ACCESS_KEY: The secure private key for your IAM User.
- * - AWS_REGION: The geographical AWS region we want to execute SDK requests in (e.g. us-east-1).
- * 
- * HOW AWS SDK RECEIVES THESE:
- * Most AWS Client constructors in SDK v3 (like SNSClient or CostExplorerClient) accept an object
- * containing:
- * {
- *   region: "us-east-1",
- *   credentials: {
- *     accessKeyId: "...",
- *     secretAccessKey: "..."
- *   }
- * }
- */
 
 // Load dotenv just in case this file is called independently (e.g. in standalone script tests)
 require('dotenv').config();
