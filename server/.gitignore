@@ -1,0 +1,14 @@
+# Node modules (dependencies installed via npm install)
+node_modules/
+
+# Local environment variables containing sensitive keys/secrets (never commit this)
+.env
+
+# Diagnostic logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS Files
+.DS_Store
+Thumbs.db

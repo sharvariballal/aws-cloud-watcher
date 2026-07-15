@@ -1,0 +1,6 @@
+{
+  "name": "AWS Cloud Watcher",
+  "description": "A comprehensive cloud management dashboard for monitoring AWS costs, budgets, service distributions, and instant metric alerts.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
