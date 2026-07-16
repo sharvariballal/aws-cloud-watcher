@@ -32,7 +32,7 @@ const connectDB = async () => {
     console.log(`========================================================`);
     
     // Exit process with failure code if connection fails
-    process.exit(1);
+    return
   }
 };
 
