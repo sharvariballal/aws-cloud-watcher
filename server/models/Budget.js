@@ -20,9 +20,8 @@ const mongoose = require('mongoose');
 const BudgetSchema = new mongoose.Schema({
   // Relational reference: Links this budget profile to a specific User
   userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: [true, 'Budget must belong to a user'],
+    type: String,
+    required: true,
   },
   monthlyLimit: {
     type: Number,

@@ -148,7 +148,7 @@ export default function Profile() {
       )}
 
       {/* Profile Form & Policy Reference column */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+      <div className="flex justify-center w-full gap-6 items-start">
         {/* Form panel */}
         <div className="rounded-xl border border-slate-800 bg-slate-900 p-5 shadow-sm">
           <h3 className="text-xs font-bold text-white font-display uppercase tracking-wider mb-3.5 flex items-center gap-1.5">
@@ -283,84 +283,6 @@ export default function Profile() {
           </form>
         </div>
 
-        {/* Integration Guidelines checklist with AWS JSON IAM Policies */}
-        <div className="space-y-6">
-          {/* IAM policy snippet box */}
-          <div className="rounded-xl border border-slate-800 bg-slate-900 p-5 shadow-sm">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-1.5">
-                <Shield className="h-4 w-4 text-emerald-400" />
-                <h3 className="text-xs font-bold text-white font-display uppercase tracking-wider">
-                  IAM Auditor Policy Schema
-                </h3>
-              </div>
-
-              <button
-                onClick={handleCopyPolicy}
-                className="inline-flex items-center gap-1.5 text-[10px] font-mono text-slate-400 hover:text-white bg-slate-950 px-2 py-1 rounded border border-slate-800"
-              >
-                {copiedPolicy ? <Check className="h-3 w-3 text-emerald-400" /> : <Copy className="h-3 w-3" />}
-                <span>{copiedPolicy ? 'Copied' : 'Copy'}</span>
-              </button>
-            </div>
-
-            <p className="text-xs text-slate-400 leading-relaxed mb-4">
-              To wire this dashboard to your real AWS account, create an IAM User/Role with the following <strong>Read-Only Cost Auditor</strong> policy. This ensures your secrets remain secure while keeping the dashboards populated:
-            </p>
-
-            <pre className="p-4 bg-slate-950 rounded-lg border border-slate-800 overflow-x-auto text-[10px] font-mono text-slate-300 leading-relaxed max-h-60 overflow-y-auto">
-              <code>{iamPolicyJson}</code>
-            </pre>
-          </div>
-
-          {/* Setup checklist instructions */}
-          <div className="rounded-xl border border-slate-800 bg-slate-900 p-5 shadow-sm">
-            <div className="flex items-center gap-1.5 mb-3">
-              <CloudLightning className="h-4 w-4 text-orange-400" />
-              <h3 className="text-xs font-bold text-white font-display uppercase tracking-wider">
-                AWS Live Integration Steps
-              </h3>
-            </div>
-
-            <ul className="space-y-3 text-xs text-slate-400">
-              <li className="flex gap-2.5 items-start">
-                <span className="flex items-center justify-center h-4.5 w-4.5 rounded bg-slate-950 border border-slate-800 text-[10px] font-mono font-bold text-orange-400 mt-0.5">
-                  1
-                </span>
-                <div>
-                  <h4 className="font-semibold text-white">Create AWS IAM credentials</h4>
-                  <p className="text-[11px] text-slate-500 mt-0.5 leading-normal">
-                    Go to AWS Console IAM Users ➔ Add User ➔ Attach the Cost/CloudWatch Policy shown above ➔ Create Access Key.
-                  </p>
-                </div>
-              </li>
-
-              <li className="flex gap-2.5 items-start">
-                <span className="flex items-center justify-center h-4.5 w-4.5 rounded bg-slate-950 border border-slate-800 text-[10px] font-mono font-bold text-orange-400 mt-0.5">
-                  2
-                </span>
-                <div>
-                  <h4 className="font-semibold text-white">Set Environment Variables</h4>
-                  <p className="text-[11px] text-slate-500 mt-0.5 leading-normal">
-                    Declare <code>AWS_ACCESS_KEY_ID</code> and <code>AWS_SECRET_ACCESS_KEY</code> in your environment file.
-                  </p>
-                </div>
-              </li>
-
-              <li className="flex gap-2.5 items-start">
-                <span className="flex items-center justify-center h-4.5 w-4.5 rounded bg-slate-950 border border-slate-800 text-[10px] font-mono font-bold text-orange-400 mt-0.5">
-                  3
-                </span>
-                <div>
-                  <h4 className="font-semibold text-white">Replace mock calls with AWS SDK</h4>
-                  <p className="text-[11px] text-slate-500 mt-0.5 leading-normal">
-                    Swap the mock lists in <code>services/billingService.ts</code> and <code>services/alertService.ts</code> using AWS client commands.
-                  </p>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
       </div>
     </motion.div>
   );
