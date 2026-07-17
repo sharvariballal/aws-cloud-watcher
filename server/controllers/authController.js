@@ -1,3 +1,4 @@
+const jwt = require("jsonwebtoken");
 const {
   signUpCognitoUser,
   loginCognitoUser,
@@ -58,13 +59,26 @@ const login = async (req, res, next) => {
       });
     }
 
-    const session = await loginCognitoUser(email, password);
+    // Authenticate with Cognito
+    await loginCognitoUser(email, password);
+
+    // Create OUR OWN JWT for Express
+    const token = jwt.sign(
+      {
+        id: email,
+        email,
+      },
+      process.env.JWT_SECRET || "fallback_secret",
+      {
+        expiresIn: "7d",
+      }
+    );
 
     return res.status(200).json({
       success: true,
       message: "Login successful",
 
-      token: session.idToken,
+      token,
 
       user: {
         id: email,
@@ -73,8 +87,6 @@ const login = async (req, res, next) => {
         budget: 0,
         awsRegion: "us-east-1",
       },
-
-      cognitoSession: session,
     });
   } catch (error) {
     next(error);
