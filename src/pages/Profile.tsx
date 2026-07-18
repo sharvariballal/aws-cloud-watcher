@@ -124,7 +124,7 @@ export default function Profile() {
 }`;
 
   if (loading) {
-    return <Loader message="Accessing AWS user config policy profiles..." />;
+    return <Loader message="Loading profile...." />;
   }
 
   return (
@@ -134,33 +134,58 @@ export default function Profile() {
       className="space-y-6"
     >
       <div>
-        <h2 className="text-lg font-bold font-display text-white uppercase tracking-tight">AWS Configuration Portal</h2>
+        <h2 className="text-lg font-bold font-display text-white uppercase tracking-tight">Profile Settings</h2>
         <p className="text-[11px] text-slate-500 font-mono">
-          Update credential endpoints, alert channels, and connection policies.
+          Manage your AWS credentials and notification settings.
         </p>
       </div>
 
       {saveSuccess && (
         <div className="rounded bg-emerald-500/10 border border-emerald-500/20 p-3 text-[11px] font-bold text-emerald-400 flex items-center gap-2">
           <CheckCircle2 className="h-3.5 w-3.5 flex-shrink-0 animate-bounce" />
-          <span>AWS Profile configurations updated. Settings are live!</span>
+          <span>Profile updated successfully!</span>
         </div>
       )}
 
       {/* Profile Form & Policy Reference column */}
-      <div className="flex justify-center w-full gap-6 items-start">
+      <div className="flex justify-center items-center w-full min-h-[75vh]">
         {/* Form panel */}
-        <div className="rounded-xl border border-slate-800 bg-slate-900 p-5 shadow-sm">
+        <div className="w-full max-w-xl rounded-xl border border-slate-800 bg-slate-900 p-5 shadow-sm">
           <h3 className="text-xs font-bold text-white font-display uppercase tracking-wider mb-3.5 flex items-center gap-1.5">
             <Key className="h-4 w-4 text-orange-400" />
-            <span>Simulated API Key Credentials</span>
+            <span>AWS Credentials</span>
           </h3>
 
           <form onSubmit={handleSave} className="space-y-3.5 text-xs">
+            {/* Name */}
+            <div>
+              <label className="text-[10px] font-semibold text-slate-400 block mb-1">
+                Name
+              </label>
+              <input
+                type="text"
+                value={user?.name || ""}
+                disabled
+                className="w-full rounded bg-slate-950 border border-slate-800 px-2.5 py-1.5 text-white text-[11px]"
+              />
+            </div>
+
+          {/* Email */}
+          <div>
+            <label className="text-[10px] font-semibold text-slate-400 block mb-1">
+              Email
+            </label>
+              <input
+                type="email"
+                value={user?.email || ""}
+                disabled
+                className="w-full rounded bg-slate-950 border border-slate-800 px-2.5 py-1.5 text-white text-[11px]"
+              />
+            </div>
             {/* IAM Access Key */}
             <div>
               <label className="text-[10px] font-semibold text-slate-400 block mb-1">
-                AWS Access Key ID (Mock)
+                Access Key ID
               </label>
               <input
                 type="text"
@@ -174,7 +199,7 @@ export default function Profile() {
             {/* IAM Secret Key */}
             <div>
               <label className="text-[10px] font-semibold text-slate-400 block mb-1">
-                AWS Secret Access Key (Mock)
+                Secret Access Key 
               </label>
               <div className="relative">
                 <input
@@ -196,7 +221,7 @@ export default function Profile() {
             {/* Region Selector */}
             <div>
               <label className="text-[10px] font-semibold text-slate-400 block mb-1">
-                Default Query AWS Region
+                AWS Region
               </label>
               <select
                 value={region}
@@ -214,7 +239,7 @@ export default function Profile() {
             {/* Threshold Input */}
             <div>
               <label className="text-[10px] font-semibold text-slate-400 block mb-1">
-                Monthly Billing Threshold Alarm ($)
+                Budget Threshold ($)
               </label>
               <input
                 type="number"
@@ -228,7 +253,7 @@ export default function Profile() {
             {/* Slack Webhook Url */}
             <div>
               <label className="text-[10px] font-semibold text-slate-400 block mb-1">
-                Incoming Slack Webhook URL
+                Slack Webhook URL
               </label>
               <input
                 type="text"
@@ -240,7 +265,7 @@ export default function Profile() {
 
             {/* Checkboxes parameters */}
             <div className="space-y-2 pt-1.5">
-              <label className="text-[10px] font-semibold text-slate-500 block uppercase tracking-wider">Notification Pipelines</label>
+              <label className="text-[10px] font-semibold text-slate-500 block uppercase tracking-wider">Notifications</label>
               
               <label className="flex items-center gap-2 cursor-pointer text-slate-300">
                 <input
@@ -249,7 +274,7 @@ export default function Profile() {
                   onChange={(e) => setEmailsChecked(e.target.checked)}
                   className="accent-orange-500 rounded h-3 w-3"
                 />
-                <span>Email alerts via Amazon SES</span>
+                <span>Email Notifications</span>
               </label>
 
               <label className="flex items-center gap-2 cursor-pointer text-slate-300">
@@ -259,7 +284,7 @@ export default function Profile() {
                   onChange={(e) => setSmsChecked(e.target.checked)}
                   className="accent-orange-500 rounded h-3 w-3"
                 />
-                <span>SMS priority alarms via Amazon SNS</span>
+                <span>SMS Notifications</span>
               </label>
 
               <label className="flex items-center gap-2 cursor-pointer text-slate-300">
@@ -269,7 +294,7 @@ export default function Profile() {
                   onChange={(e) => setMfaChecked(e.target.checked)}
                   className="accent-orange-500 rounded h-3 w-3"
                 />
-                <span>Require Multi-Factor (MFA) to access credentials</span>
+                <span>Enable MFA</span>
               </label>
             </div>
 
